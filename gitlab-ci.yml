@@ -1,0 +1,37 @@
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  only:
+    - main
+  before_script:
+    - echo 'build starts'
+    - chmod +x ./gradlew
+  script:
+    - ./gradlew clean build
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: never
+  tags:
+    - finding-a-home-safely
+  when: on_success
+
+deploy:
+  stage: deploy
+  only:
+    - main
+  before_script:
+    - (before script 내용)
+  script:
+    - (script 내용)
+  tags:
+    - finding-a-home-safely
+  when: manual
