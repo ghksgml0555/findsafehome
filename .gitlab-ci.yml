@@ -22,6 +22,7 @@ build:
     expire_in: never
   tags:
     - finding-a-home-safely-test
+  when: on_success
 
 deploy:
   stage: deploy
@@ -42,4 +43,4 @@ deploy:
     - ssh -o StrictHostKeyChecking=no ec2-user@"$DEPLOY_SERVER" '~/deploy.sh'
   tags:
     - finding-a-home-safely-test
-  when: manual
+  when: on_success
