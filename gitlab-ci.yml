@@ -29,9 +29,18 @@ deploy:
   only:
     - main
   before_script:
-    - (before script 내용)
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
-    - (script 내용)
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$DEPLOY_SERVER" 'rm -f ~/app/build/*.jar'
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$DEPLOY_SERVER" 'mkdir -p ~/app/build'
+    - scp build/libs/*.jar ec2-user@"$DEPLOY_SERVER":~/app/build/demo.jar
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$DEPLOY_SERVER" '~/deploy.sh'
   tags:
     - finding-a-home-safely
   when: manual
