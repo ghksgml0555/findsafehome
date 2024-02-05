@@ -21,7 +21,7 @@ build:
       - build/libs/*.jar
     expire_in: never
   tags:
-    - finding-a-home-safely
+    - finding-a-home-safely-test
   when: on_success
 
 deploy:
@@ -42,5 +42,5 @@ deploy:
     - scp build/libs/*.jar ec2-user@"$DEPLOY_SERVER":~/app/build/demo.jar
     - ssh -o StrictHostKeyChecking=no ec2-user@"$DEPLOY_SERVER" '~/deploy.sh'
   tags:
-    - finding-a-home-safely
+    - finding-a-home-safely-test
   when: manual
