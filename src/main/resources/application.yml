@@ -1,0 +1,37 @@
+spring:
+  config:
+    import: optional:classpath:config/local.yml
+  profiles:
+    group:
+      prod: profile-prod
+      local: profile-local
+
+#    import: "classpath:../config/local.yml"
+#default:
+#  string: default property
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: profile1
+#    name:
+#    location:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://swyg9.cp8aui86i2il.ap-northeast-2.rds.amazonaws.com:3306/stag
+#    username: sulbin
+#    password: 12341234
+#server:
+#  port: 8888
+---
+#spring:
+#  config:
+#    activate:
+#      on-profile: profile2
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://swyg9.cp8aui86i2il.ap-northeast-2.rds.amazonaws.com:3306/stag
+#    username: sulbin
+#    password: 12341234
+#server:
+#  port: 9999

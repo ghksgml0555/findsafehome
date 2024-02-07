@@ -1,0 +1,12 @@
+server:
+  port: 7000
+
+spring:
+  config:
+    activate:
+      on-profile: profile-local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://swyg9.cp8aui86i2il.ap-northeast-2.rds.amazonaws.com:3306/stag
+    username: sulbin
+    password: 12341234
