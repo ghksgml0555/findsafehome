@@ -1,0 +1,46 @@
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  only:
+    - main
+  before_script:
+    - echo 'build starts'
+    - chmod +x ./gradlew
+  script:
+    - ./gradlew clean build
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: never
+  tags:
+    - finding-a-home-safely-test
+  when: on_success
+
+deploy:
+  stage: deploy
+  only:
+    - main
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$DEPLOY_SERVER" 'rm -f ~/app/build/*.jar'
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$DEPLOY_SERVER" 'mkdir -p ~/app/build'
+    - scp build/libs/testPrac-0.0.1-SNAPSHOT.jar ec2-user@"$DEPLOY_SERVER":~/app/build
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$DEPLOY_SERVER" '~/deploy.sh'
+  tags:
+    - finding-a-home-safely-test
+  when: on_success
