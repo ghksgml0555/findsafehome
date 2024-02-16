@@ -3,11 +3,13 @@ package com.swyg.findingahomesafely.common.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
 
 
+@Getter
 public class ResponseResult<T> {
 
     private ResponseResult() {
