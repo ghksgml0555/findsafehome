@@ -2,7 +2,7 @@ package com.swyg.findingahomesafely.controller;
 
 import com.swyg.findingahomesafely.common.exception.SwygException;
 import com.swyg.findingahomesafely.common.response.ResponseResult;
-import com.swyg.findingahomesafely.domain.error.SY_ERR_MSG_I;
+import com.swyg.findingahomesafely.domain.error.SyErrMsgI;
 import com.swyg.findingahomesafely.repository.TestRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class TestController {
     @GetMapping("/test")
     public ResponseResult<?> testController() {
 
-        SY_ERR_MSG_I syErrMsgI = SY_ERR_MSG_I.builder()
+        SyErrMsgI syErrMsgI = SyErrMsgI.builder()
                 .errCd("TEST05")
                 .errMsg("테스트 커스텀 익셉션05")
                 .build();
@@ -39,18 +39,26 @@ public class TestController {
     @GetMapping("/testSelect")
     public ResponseResult<?> testSelectController() {
 
-        SY_ERR_MSG_I syErrMsgI = testRepository.findByErrCd("TEST01").orElseThrow(
+        SyErrMsgI syErrMsgI = testRepository.findByErrCd("TEST01").orElseThrow(
                 () -> new SwygException("TEST01"));
         System.out.println("===========================================================");
         System.out.println(syErrMsgI.getCreatedAt());
 
-        List<SY_ERR_MSG_I> all = testRepository.findAll();
+        List<SyErrMsgI> all = testRepository.findAll();
 
         System.out.println("===========================================================");
 
         all.stream().forEach(System.out::println);
 
         return ResponseResult.body(syErrMsgI);
+    }
+
+    @GetMapping("/testException")
+    public ResponseResult<?> testExceptionController() {
+
+        throw new SwygException("TEST02");
+
+//        return ResponseResult.body();
     }
 
     @GetMapping("/soup")

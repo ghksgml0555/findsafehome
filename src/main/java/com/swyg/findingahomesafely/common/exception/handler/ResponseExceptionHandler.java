@@ -64,8 +64,8 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     protected ResponseResult<Object> handleExceptionInternal(SwygException ex, WebRequest request) {
-        log.error("", ex);
 //        String errMsg = CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), ex.getErrorCode(), ex.getErrorMessage());
+        log.error("", ex);
 //        log.error("KomscoException :: Code [{}], Message [{}]", ex.getErrorCode(), errMsg);
 //        return ResponseResult.body(ex.getErrorCode(), errMsg);
         return ResponseResult.body("커스텀 에러");
@@ -77,6 +77,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     protected ResponseResult<Object> handleExceptionInternal(Exception ex, WebRequest request) {
         log.error("", ex);
+//        return ResponseResult.body("C99999");
 //        return ResponseResult.body("C99999", CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), "C99999"));
         return ResponseResult.body("런타임 익셉션");
     }
