@@ -3,6 +3,7 @@ package com.swyg.findingahomesafely.common.exception.handler;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.json.UTF8StreamJsonParser;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.swyg.findingahomesafely.common.codecache.CodeConfig;
 import com.swyg.findingahomesafely.common.exception.SwygException;
 import com.swyg.findingahomesafely.common.response.ResponseResult;
 import lombok.AllArgsConstructor;
@@ -34,38 +35,40 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
 //    private final MessageSourceAccessor messageSource;
 
-    @Override
-    @ResponseStatus(HttpStatus.OK)
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        List<String> errorMessageList = new ArrayList<>();
-
-        String errorArgument = "";
-        String errorMsg = "";
-        for (ObjectError error : ex.getBindingResult().getAllErrors()) {
-            errorMessageList.add(error.getDefaultMessage());
-
-            for (Object argumentObj : error.getArguments()) {
-                if (argumentObj instanceof DefaultMessageSourceResolvable) {
-                    DefaultMessageSourceResolvable data = (DefaultMessageSourceResolvable) argumentObj;
-                    errorArgument = data.getDefaultMessage();
-                }
-            }
-
-            errorMsg = CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), "C00001") + " [" + errorArgument + "]";
-
-        }
-
-        log.error("[API][" + errorMsg + "]");
-        return ResponseEntity.ok().body(ResponseResult.body("C00001", errorMsg, errorMessageList));
-    }
+//    @Override
+//    @ResponseStatus(HttpStatus.OK)
+//    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+//        List<String> errorMessageList = new ArrayList<>();
+//
+//        String errorArgument = "";
+//        String errorMsg = "";
+//        for (ObjectError error : ex.getBindingResult().getAllErrors()) {
+//            errorMessageList.add(error.getDefaultMessage());
+//
+//            for (Object argumentObj : error.getArguments()) {
+//                if (argumentObj instanceof DefaultMessageSourceResolvable) {
+//                    DefaultMessageSourceResolvable data = (DefaultMessageSourceResolvable) argumentObj;
+//                    errorArgument = data.getDefaultMessage();
+//                }
+//            }
+//
+//            errorMsg = CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), "C00001") + " [" + errorArgument + "]";
+//
+//        }
+//
+//        log.error("[API][" + errorMsg + "]");
+//        return ResponseEntity.ok().body(ResponseResult.body("C00001", errorMsg, errorMessageList));
+//    }
 
     @ExceptionHandler({SwygException.class})
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     protected ResponseResult<Object> handleExceptionInternal(SwygException ex, WebRequest request) {
-        String errMsg = CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), ex.getErrorCode(), ex.getErrorMessage());
-        log.error("KomscoException :: Code [{}], Message [{}]", ex.getErrorCode(), errMsg);
-        return ResponseResult.body(ex.getErrorCode(), errMsg);
+        log.error("", ex);
+//        String errMsg = CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), ex.getErrorCode(), ex.getErrorMessage());
+//        log.error("KomscoException :: Code [{}], Message [{}]", ex.getErrorCode(), errMsg);
+//        return ResponseResult.body(ex.getErrorCode(), errMsg);
+        return ResponseResult.body("커스텀 에러");
     }
 
 
@@ -74,7 +77,8 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     protected ResponseResult<Object> handleExceptionInternal(Exception ex, WebRequest request) {
         log.error("", ex);
-        return ResponseResult.body("C99999", CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), "C99999"));
+//        return ResponseResult.body("C99999", CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), "C99999"));
+        return ResponseResult.body("런타임 익셉션");
     }
 
 }
