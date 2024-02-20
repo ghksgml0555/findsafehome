@@ -105,6 +105,7 @@ public class TestController {
 
         private String name;
         private String mail;
+        private String test;
 
     }
 
