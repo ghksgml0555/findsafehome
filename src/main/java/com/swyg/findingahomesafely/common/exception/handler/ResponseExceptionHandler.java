@@ -61,25 +61,24 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 //    }
 
     @ExceptionHandler({SwygException.class})
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     protected ResponseResult<Object> handleExceptionInternal(SwygException ex, WebRequest request) {
-//        String errMsg = CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), ex.getErrorCode(), ex.getErrorMessage());
+        String errMsg = CodeConfig.getErrorMessage(ex.getErrorCode());
         log.error("", ex);
-//        log.error("KomscoException :: Code [{}], Message [{}]", ex.getErrorCode(), errMsg);
-//        return ResponseResult.body(ex.getErrorCode(), errMsg);
-        return ResponseResult.body("커스텀 에러");
+        log.error("KomscoException :: Code [{}], Message [{}]", ex.getErrorCode(), errMsg);
+        return ResponseResult.body(ex.getErrorCode(), errMsg);
     }
 
 
     @ExceptionHandler({Exception.class})
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     protected ResponseResult<Object> handleExceptionInternal(Exception ex, WebRequest request) {
+        String errMsg = CodeConfig.getErrorMessage("C99999",ex);
         log.error("", ex);
-//        return ResponseResult.body("C99999");
-//        return ResponseResult.body("C99999", CodeConfig.getErrorMessage(ERR_DIV_CD.KOMSCO.getCode(), "C99999"));
-        return ResponseResult.body("런타임 익셉션");
+        log.error("KomscoException :: Code [{}], Message [{}]", "C99999", errMsg);
+        return ResponseResult.body("C99999",errMsg);
     }
 
 }

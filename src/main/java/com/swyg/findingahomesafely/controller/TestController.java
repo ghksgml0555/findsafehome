@@ -27,8 +27,8 @@ public class TestController {
     public ResponseResult<?> testController() {
 
         SyErrMsgI syErrMsgI = SyErrMsgI.builder()
-                .errCd("TEST05")
-                .errMsg("테스트 커스텀 익셉션05")
+                .errCd("TEST07")
+                .errMsg("테스트 커스텀 익셉션07")
                 .build();
 
         testRepository.save(syErrMsgI);
@@ -56,9 +56,14 @@ public class TestController {
     @GetMapping("/testException")
     public ResponseResult<?> testExceptionController() {
 
-        throw new SwygException("TEST02");
+        throw new SwygException("TEST05");
 
-//        return ResponseResult.body();
+    }
+    @GetMapping("/testRuntimeException")
+    public ResponseResult<?> testRuntimeExceptionController() {
+
+        throw new RuntimeException();
+
     }
 
     @GetMapping("/soup")

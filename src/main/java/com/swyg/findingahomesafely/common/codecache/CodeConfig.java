@@ -29,7 +29,6 @@ public class CodeConfig {
 
 	/**
 	 * 오류 코드 정보
-	 * @date 2022-07-29 18:13:51
 	 */
 	private static Map<String, String> errorCodeMap = new HashMap<>();
 
@@ -45,7 +44,7 @@ public class CodeConfig {
 			do {
 				getErrorCode();
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(60000);
 				} catch (InterruptedException e) {
 					log.error("", e);
 				}
@@ -62,59 +61,44 @@ public class CodeConfig {
 	public void getErrorCode() {
 		List<SyErrMsgI> syErrMsgI = testRepository.findAll();
 
-		Map<String, String> collect = syErrMsgI.stream().collect(Collectors.toMap(
-				item -> item.getErrCd(),
-				item -> item.getErrMsg()
-		));
+		if(syErrMsgI.size() != errorCodeMap.size()){
+			log.info("[code-config] change");
+			errorCodeMap = syErrMsgI.stream().collect(Collectors.toMap(
+					item -> item.getErrCd(),
+					item -> item.getErrMsg()
+			));
+		}
 
+		errorCodeMap.forEach((key,value) -> {
+			System.out.println(key + " " + value);
+		});
 
-//		log.debug("[code-config] getErrorCodeTimeStamp: {}", getErrorCodeTimeStamp);
 		log.debug("[code-config] error code Map Size: {}", errorCodeMap.size());
 	}
-//
-//	/**
-//	 * 오류 메시지 조회
-//	 * @param errDivCd: 오류 구분 코드 (3026) 01:Komsco, 02:OpenApi, 03:KCP, 04:오픈뱅킹, 05:마이데이터, 06:카드사, 07:CPM
-//	 * @param errorCode: 오류 코드
-//	 * @return java.lang.String
-//	 * @date 2022-07-29 18:26:56
-//	 */
-//	public static String getErrorMessage(String errDivCd, String errorCode) {
-//		String result = "시스템 오류입니다. 관리자에게 문의하세요";
-//
-//		Map<String, SyErrMsgInfoEntity> errMap = errorCodeMap.get(errDivCd);
-//		if(errMap != null) {
-//			SyErrMsgInfoEntity syErrMsgInfoEntity = errMap.get(errorCode);
-//			if (syErrMsgInfoEntity != null ){
-//				result = syErrMsgInfoEntity.getErrMsgCtnt();
-//			}
-//		}
-//		return result;
-//	}
-//
-//	/**
-//	 * 오류 메시지 조회
-//	 * @param errDivCd: 오류 구분 코드 (3026) 01:Komsco, 02:OpenApi, 03:KCP, 04:오픈뱅킹, 05:마이데이터, 06:카드사, 07:CPM
-//	 * @param errorCode: 오류 코드
-//	 * @param defaultErrorMessage: default 오류 메시지
-//	 * @return java.lang.String
-//	 * @date 2022-07-29 18:27:30
-//	 */
-//	public static String getErrorMessage(String errDivCd, String errorCode, String defaultErrorMessage) {
-//		String result = defaultErrorMessage;
-//		if(StringUtils.hasLength(result)) {
-//			result = "시스템 오류입니다. 관리자에게 문의하세요";
-//
-//			Map<String, SyErrMsgInfoEntity> errMap = errorCodeMap.get(errDivCd);
-//			if(errMap != null) {
-//				SyErrMsgInfoEntity syErrMsgInfoEntity = errMap.get(errorCode);
-//				if (syErrMsgInfoEntity != null ){
-//					result = syErrMsgInfoEntity.getErrMsgCtnt();
-//				}
-//			}
-//		}
-//
-//		return result;
-//	}
+
+	/**
+	 * 오류 메시지 조회
+	 */
+	public static String getErrorMessage(String errorCode) {
+		String result = "시스템 오류입니다. 관리자에게 문의하세요";
+
+		if(errorCodeMap.containsKey(errorCode)) {
+			result = errorCodeMap.get(errorCode);
+		}
+		return result;
+	}
+
+	/**
+	 * 오류 메시지 조회
+	 */
+	public static String getErrorMessage(String errorCode, Exception defaultErrorMessage) {
+		String result = defaultErrorMessage.toString();
+
+		if(errorCodeMap.containsKey(errorCode)) {
+			result = errorCodeMap.get(errorCode);
+		}
+
+		return result;
+	}
 
 }
