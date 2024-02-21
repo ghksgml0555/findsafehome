@@ -44,7 +44,7 @@ public class CodeConfig {
 			do {
 				getErrorCode();
 				try {
-					Thread.sleep(60000);
+					Thread.sleep(600000);
 				} catch (InterruptedException e) {
 					log.error("", e);
 				}
