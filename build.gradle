@@ -24,8 +24,13 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.jsoup:jsoup:1.13.1'
 
+	// S3
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.174'
+
+
+	// 크롤링
+	implementation 'org.jsoup:jsoup:1.13.1'
 
 	// QueryDSL 설정
 	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
