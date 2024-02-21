@@ -10,3 +10,6 @@ spring:
     url: jdbc:mysql://swyg9.cp8aui86i2il.ap-northeast-2.rds.amazonaws.com:3306/prod
     username: sulbin
     password: 12341234
+  jpa:
+    hibernate:
+      ddl-auto: update
