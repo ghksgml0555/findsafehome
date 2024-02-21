@@ -43,8 +43,8 @@ public class TestController {
     @GetMapping("/testSelect")
     public ResponseResult<?> testSelectController() {
 
-        SyErrMsgI syErrMsgI = testRepository.findByErrCd("TEST01").orElseThrow(
-                () -> new SwygException("TEST01"));
+        SyErrMsgI syErrMsgI = testRepository.findByErrCd("C99999").orElseThrow(
+                () -> new SwygException("C99999"));
         System.out.println("===========================================================");
         System.out.println(syErrMsgI.getCreatedAt());
 
@@ -60,7 +60,7 @@ public class TestController {
     @GetMapping("/testException")
     public ResponseResult<?> testExceptionController() {
 
-        throw new SwygException("TEST05");
+        throw new SwygException("C99999");
 
     }
     @GetMapping("/testRuntimeException")
