@@ -13,3 +13,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+crawling:
+  url: https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp?search_section=p_sec_2

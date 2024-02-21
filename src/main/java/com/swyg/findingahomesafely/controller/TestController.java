@@ -11,6 +11,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,9 @@ import java.util.List;
 public class TestController {
 
     private final TestRepository testRepository;
+
+    @Value("${crawling.url}")
+    private String crawlingUrl;
 
     @GetMapping("/test")
     public ResponseResult<?> testController() {
@@ -69,8 +73,7 @@ public class TestController {
     @GetMapping("/soup")
     public ResponseResult<?> testSoupController() {
 
-        //TODO yml에 넣기.
-        String crawlingEnterUrl = "https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp?search_section=p_sec_2";
+        String crawlingEnterUrl = crawlingUrl;
 
         Connection conn = Jsoup.connect(crawlingEnterUrl);
 
