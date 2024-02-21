@@ -11,6 +11,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,9 @@ import java.util.List;
 public class TestController {
 
     private final TestRepository testRepository;
+
+    @Value("${crawling.url}")
+    private String crawlingUrl;
 
     @GetMapping("/test")
     public ResponseResult<?> testController() {
@@ -39,8 +43,8 @@ public class TestController {
     @GetMapping("/testSelect")
     public ResponseResult<?> testSelectController() {
 
-        SyErrMsgI syErrMsgI = testRepository.findByErrCd("TEST01").orElseThrow(
-                () -> new SwygException("TEST01"));
+        SyErrMsgI syErrMsgI = testRepository.findByErrCd("C99999").orElseThrow(
+                () -> new SwygException("C99999"));
         System.out.println("===========================================================");
         System.out.println(syErrMsgI.getCreatedAt());
 
@@ -56,7 +60,7 @@ public class TestController {
     @GetMapping("/testException")
     public ResponseResult<?> testExceptionController() {
 
-        throw new SwygException("TEST05");
+        throw new SwygException("C99999");
 
     }
     @GetMapping("/testRuntimeException")
@@ -69,8 +73,7 @@ public class TestController {
     @GetMapping("/soup")
     public ResponseResult<?> testSoupController() {
 
-        //TODO yml에 넣기.
-        String crawlingEnterUrl = "https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp?search_section=p_sec_2";
+        String crawlingEnterUrl = crawlingUrl;
 
         Connection conn = Jsoup.connect(crawlingEnterUrl);
 
