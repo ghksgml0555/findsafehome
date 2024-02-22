@@ -32,6 +32,18 @@ dependencies {
 	// 크롤링
 	implementation 'org.jsoup:jsoup:1.13.1'
 
+	//Spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	//유효성검사
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	//jwt
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+
 	// QueryDSL 설정
 	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
 	annotationProcessor 'com.querydsl:querydsl-apt:5.1.0:jakarta'
