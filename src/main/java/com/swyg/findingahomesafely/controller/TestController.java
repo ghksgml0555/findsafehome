@@ -1,5 +1,7 @@
 package com.swyg.findingahomesafely.controller;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.swyg.findingahomesafely.common.exception.SwygException;
 import com.swyg.findingahomesafely.common.response.ResponseResult;
 import com.swyg.findingahomesafely.domain.error.SyErrMsgI;
@@ -23,9 +25,13 @@ import java.util.List;
 public class TestController {
 
     private final TestRepository testRepository;
+    private final AmazonS3 amazonS3Client;
 
     @Value("${crawling.url}")
     private String crawlingUrl;
+
+    private String accessKey = "AKIAXYKJS7QBIFKGKRAE";
+    private String secretKey = "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";
 
     @GetMapping("/test")
     public ResponseResult<?> testController() {
@@ -60,8 +66,12 @@ public class TestController {
     @GetMapping("/testException")
     public ResponseResult<?> testExceptionController() {
 
-        throw new SwygException("C99999");
+        System.out.println("=================================");
+//        System.out.println(AmazonS3Client.builder().build().getRegion());
+        System.out.println(amazonS3Client.getRegion());
+        System.out.println("=================================");
 
+        return ResponseResult.body();
     }
     @GetMapping("/testRuntimeException")
     public ResponseResult<?> testRuntimeExceptionController() {
