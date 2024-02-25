@@ -13,6 +13,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB # 한개 파일의 최대 사이즈 (default: 1MB)
+      max-request-size: 100MB # 한개 요청의 최대 사이즈 (default: 10MB)
 
 crawling:
   url: https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp?search_section=p_sec_2
