@@ -9,6 +9,7 @@ import java.util.List;
 @Setter
 public class ReqFinishUpload {
 
+    private String key;
     private String uploadId;
     private List<Part> parts;
 

@@ -34,13 +34,12 @@ public class FileUploadController {
 
     private final AmazonS3 amazonS3Client;
     private final String bucket = "swyg-bucket";
+    private final String S3FilePath = "test/";
 
     @PostMapping("/initiate-upload")
     public ResponseResult<?> initiateUpload(@RequestBody ReqPreSignedUploadInitiate reqPreSignedUploadInitiate){
 
-        String objectKey = "test/" + reqPreSignedUploadInitiate.getOriginalFileName();
-
-        System.out.println(objectKey);
+        String objectKey = S3FilePath + reqPreSignedUploadInitiate.getOriginalFileName();
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(reqPreSignedUploadInitiate.getFileSize());
@@ -48,13 +47,16 @@ public class FileUploadController {
 
         InitiateMultipartUploadRequest initiateMultipartUploadRequest = new InitiateMultipartUploadRequest(bucket,objectKey,objectMetadata);
 
+        System.out.println(objectKey);
+        System.out.println(objectMetadata.getContentType());
+
         return ResponseResult.body(amazonS3Client.initiateMultipartUpload(initiateMultipartUploadRequest));
     }
 
 
     @PostMapping("/presigned-url")
     public ResponseResult<?> initiateUpload(@RequestBody ReqPreSignedUrlCreate reqPreSignedUrlCreateRequest){
-        String objectKey = "test/kickoff.pdf";
+        String objectKey = reqPreSignedUrlCreateRequest.getKey();
 
         Date expirationTime  = Date.from(
                 LocalDateTime.now().plusMinutes(10).atZone(ZoneId.systemDefault()).toInstant()
@@ -74,7 +76,7 @@ public class FileUploadController {
 
     @PostMapping("/complete-upload")
     public ResponseResult<?> initiateUpload(@RequestBody ReqFinishUpload reqFinishUpload){
-        String objectKey = "test/kickoff.pdf";
+        String objectKey = reqFinishUpload.getKey();
 
         List<PartETag> partETags = reqFinishUpload.getParts().stream().map(
                 item -> new PartETag(item.getPartNumber(),item.getETag())
