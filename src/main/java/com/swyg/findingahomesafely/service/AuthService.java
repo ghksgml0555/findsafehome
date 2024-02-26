@@ -1,5 +1,6 @@
 package com.swyg.findingahomesafely.service;
 
+import com.swyg.findingahomesafely.common.exception.SwygException;
 import com.swyg.findingahomesafely.domain.Member;
 import com.swyg.findingahomesafely.domain.RefreshToken;
 import com.swyg.findingahomesafely.dto.*;
@@ -26,7 +27,7 @@ public class AuthService {
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다");
+            throw new SwygException("SU0001","이미 가입되어 있는 유저(이메일)입니다");
         }
 
         Member member = memberRequestDto.toMember(passwordEncoder);
@@ -61,7 +62,7 @@ public class AuthService {
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
+            throw new SwygException("RT0001","Refresh Token 이 유효하지 않습니다.");
         }
 
         // 2. Access Token 에서 Member ID 가져오기
@@ -69,11 +70,11 @@ public class AuthService {
 
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
         RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
+                .orElseThrow(() -> new SwygException("RT0002","로그아웃 된 사용자입니다."));
 
         // 4. Refresh Token 일치하는지 검사
         if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+            throw new SwygException("RT0003","토큰의 유저 정보가 일치하지 않습니다.");
         }
 
         // 5. 새로운 토큰 생성
