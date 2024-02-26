@@ -42,7 +42,7 @@ public class SecurityConfig{
             config.setAllowedHeaders(Collections.singletonList("*"));
             config.setAllowedMethods(Collections.singletonList("*"));
             config.setAllowedOriginPatterns(Collections.singletonList("*")); // ️ 허용할 origin
-            config.setAllowCredentials(true);
+            config.setAllowCredentials(false);
             return config;
         };
     }
