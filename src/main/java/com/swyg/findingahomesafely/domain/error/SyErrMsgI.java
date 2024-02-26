@@ -14,10 +14,10 @@ public class SyErrMsgI extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(name="ERR_CD", unique = true)
     private String errCd;
 
-    @Column(unique = true)
+    @Column(name="ERR_MSG", unique = true)
     private String errMsg;
 
     @Builder

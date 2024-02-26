@@ -1,10 +1,8 @@
-package com.swyg.findingahomesafely.dto.FileUploadDto;
+package com.swyg.findingahomesafely.dto.fileUploadDto;
 
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-
 public class ReqPreSignedUploadInitiate {
 
     private String originalFileName;
