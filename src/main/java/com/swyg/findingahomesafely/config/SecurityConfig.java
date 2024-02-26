@@ -42,7 +42,7 @@ public class SecurityConfig{
             config.setAllowedHeaders(Collections.singletonList("*"));
             config.setAllowedMethods(Collections.singletonList("*"));
             config.setAllowedOriginPatterns(Collections.singletonList("*")); // ️ 허용할 origin
-            config.setAllowCredentials(false);
+            config.setAllowCredentials(true);
             return config;
         };
     }
@@ -75,7 +75,7 @@ public class SecurityConfig{
 
                 .authorizeHttpRequests((authorizeRequests)->
                         authorizeRequests
-                                .requestMatchers("/login","/signup","/re/**","/").permitAll() // 인증없어도 되는 페이지
+                                .requestMatchers("/login","/signup","/**").permitAll() // 인증없어도 되는 페이지
                                 .anyRequest().authenticated() // 그 외 인증 없이 접근X
                 )
 
