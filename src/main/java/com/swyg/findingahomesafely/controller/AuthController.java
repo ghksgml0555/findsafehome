@@ -1,5 +1,6 @@
 package com.swyg.findingahomesafely.controller;
 
+import com.swyg.findingahomesafely.common.response.ResponseResult;
 import com.swyg.findingahomesafely.dto.*;
 import com.swyg.findingahomesafely.service.AuthService;
 import com.swyg.findingahomesafely.util.SecurityUtil;
@@ -16,18 +17,21 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto memberRequestDto) {
-        return ResponseEntity.ok(authService.signup(memberRequestDto));
+    public ResponseResult<?> signup(@RequestBody MemberRequestDto memberRequestDto) {
+        return ResponseResult.body(authService.signup(memberRequestDto));
+        //return ResponseEntity.ok(authService.signup(memberRequestDto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) {
-        return ResponseEntity.ok(authService.login(loginDto));
+    public ResponseResult<?> login(@RequestBody LoginDto loginDto) {
+        return ResponseResult.body(authService.login(loginDto));
+        //return ResponseEntity.ok(authService.login(loginDto));
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
-        return ResponseEntity.ok(authService.reissue(tokenRequestDto));
+    public ResponseResult<?> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
+        return ResponseResult.body(authService.reissue(tokenRequestDto));
+        //return ResponseEntity.ok(authService.reissue(tokenRequestDto));
     }
 
     @PostMapping("/loginTest")
