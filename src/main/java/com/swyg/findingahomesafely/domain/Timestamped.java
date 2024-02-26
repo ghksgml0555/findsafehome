@@ -18,6 +18,7 @@ public abstract class Timestamped { // abstract는 상속으로만 사용할 수
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    //TODO 형식 프론트랑 맞추기.
     @LastModifiedDate // 마지막 수정일자임을 나타냅니다.
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
