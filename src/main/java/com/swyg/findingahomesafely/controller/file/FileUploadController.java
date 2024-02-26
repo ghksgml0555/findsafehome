@@ -1,17 +1,13 @@
-package com.swyg.findingahomesafely.controller;
+package com.swyg.findingahomesafely.controller.file;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.swyg.findingahomesafely.common.response.ResponseResult;
-import com.swyg.findingahomesafely.dto.FileUploadDto.ReqFinishUpload;
-import com.swyg.findingahomesafely.dto.FileUploadDto.ReqPartUpload;
-import com.swyg.findingahomesafely.dto.FileUploadDto.ReqPreSignedUploadInitiate;
-import com.swyg.findingahomesafely.dto.FileUploadDto.ReqPreSignedUrlCreate;
-import jakarta.servlet.http.HttpServletRequest;
+import com.swyg.findingahomesafely.dto.fileUploadDto.ReqFinishUpload;
+import com.swyg.findingahomesafely.dto.fileUploadDto.ReqPreSignedUploadInitiate;
+import com.swyg.findingahomesafely.dto.fileUploadDto.ReqPreSignedUrlCreate;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
-import org.apache.http.entity.ContentType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +18,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor

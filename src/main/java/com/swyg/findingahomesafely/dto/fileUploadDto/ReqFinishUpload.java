@@ -1,4 +1,4 @@
-package com.swyg.findingahomesafely.dto.FileUploadDto;
+package com.swyg.findingahomesafely.dto.fileUploadDto;
 
 import lombok.Getter;
 import lombok.Setter;
