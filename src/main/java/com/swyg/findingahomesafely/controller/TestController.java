@@ -1,8 +1,12 @@
 package com.swyg.findingahomesafely.controller;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.swyg.findingahomesafely.common.exception.SwygException;
 import com.swyg.findingahomesafely.common.response.ResponseResult;
 import com.swyg.findingahomesafely.domain.error.SyErrMsgI;
+import com.swyg.findingahomesafely.domain.realestate.RealEstatePolicyLetter;
+import com.swyg.findingahomesafely.repository.RealEstatePolicyLetterRepository;
 import com.swyg.findingahomesafely.repository.TestRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,21 +27,28 @@ import java.util.List;
 public class TestController {
 
     private final TestRepository testRepository;
+    private final RealEstatePolicyLetterRepository realEstatePolicyLetterRepository;
+    private final AmazonS3 amazonS3Client;
 
     @Value("${crawling.url}")
     private String crawlingUrl;
 
+    private String accessKey = "AKIAXYKJS7QBIFKGKRAE";
+    private String secretKey = "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";
+
     @GetMapping("/test")
     public ResponseResult<?> testController() {
 
-        SyErrMsgI syErrMsgI = SyErrMsgI.builder()
-                .errCd("TEST07")
-                .errMsg("테스트 커스텀 익셉션07")
+        RealEstatePolicyLetter realEstatePolicyLetter = RealEstatePolicyLetter.builder()
+                .title("부동산 정책 레터 제목 2")
+                .thumbnailImgUrl("https://swyg-bucket.s3.ap-northeast-2.amazonaws.com/static/thumbnail2.jpg")
+                .contentImgUrl("https://swyg-bucket.s3.ap-northeast-2.amazonaws.com/static/thumbnail22.jpg")
+                .author("강혜수")
                 .build();
 
-        testRepository.save(syErrMsgI);
+        realEstatePolicyLetterRepository.save(realEstatePolicyLetter);
 
-        return ResponseResult.body(syErrMsgI);
+        return ResponseResult.body(realEstatePolicyLetter);
     }
 
     @GetMapping("/testSelect")
@@ -60,8 +71,12 @@ public class TestController {
     @GetMapping("/testException")
     public ResponseResult<?> testExceptionController() {
 
-        throw new SwygException("C99999");
+        System.out.println("=================================");
+//        System.out.println(AmazonS3Client.builder().build().getRegion());
+        System.out.println(amazonS3Client.getRegion());
+        System.out.println("=================================");
 
+        return ResponseResult.body();
     }
     @GetMapping("/testRuntimeException")
     public ResponseResult<?> testRuntimeExceptionController() {
