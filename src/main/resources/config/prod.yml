@@ -16,3 +16,20 @@ spring:
 
 crawling:
   url: https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp?search_section=p_sec_2
+
+  jwt:
+    #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+    secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+
+cloud:
+  aws:
+    s3:
+      bucket: swyg-bucket
+    credentials:
+      access-key: AKIAXYKJS7QBIFKGKRAE
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
