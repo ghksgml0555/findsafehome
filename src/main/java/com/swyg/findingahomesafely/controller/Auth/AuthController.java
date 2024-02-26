@@ -1,14 +1,14 @@
-package com.swyg.findingahomesafely.controller;
+package com.swyg.findingahomesafely.controller.Auth;
 
 import com.swyg.findingahomesafely.common.response.ResponseResult;
-import com.swyg.findingahomesafely.dto.*;
-import com.swyg.findingahomesafely.service.AuthService;
+import com.swyg.findingahomesafely.dto.loginDto.LoginDto;
+import com.swyg.findingahomesafely.dto.loginDto.TokenRequestDto;
+import com.swyg.findingahomesafely.dto.memberDto.MemberRequestDto;
+import com.swyg.findingahomesafely.service.auth.AuthService;
 import com.swyg.findingahomesafely.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

@@ -1,4 +1,4 @@
-package com.swyg.findingahomesafely.domain;
+package com.swyg.findingahomesafely.domain.member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

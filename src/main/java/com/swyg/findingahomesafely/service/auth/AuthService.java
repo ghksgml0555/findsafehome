@@ -1,9 +1,13 @@
-package com.swyg.findingahomesafely.service;
+package com.swyg.findingahomesafely.service.auth;
 
 import com.swyg.findingahomesafely.common.exception.SwygException;
-import com.swyg.findingahomesafely.domain.Member;
-import com.swyg.findingahomesafely.domain.RefreshToken;
-import com.swyg.findingahomesafely.dto.*;
+import com.swyg.findingahomesafely.domain.member.Member;
+import com.swyg.findingahomesafely.domain.member.RefreshToken;
+import com.swyg.findingahomesafely.dto.loginDto.LoginDto;
+import com.swyg.findingahomesafely.dto.loginDto.TokenDto;
+import com.swyg.findingahomesafely.dto.loginDto.TokenRequestDto;
+import com.swyg.findingahomesafely.dto.memberDto.MemberRequestDto;
+import com.swyg.findingahomesafely.dto.memberDto.MemberResponseDto;
 import com.swyg.findingahomesafely.jwt.TokenProvider;
 import com.swyg.findingahomesafely.repository.MemberRepository;
 import com.swyg.findingahomesafely.repository.RefreshTokenRepository;
