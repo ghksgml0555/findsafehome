@@ -25,12 +25,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	//MapStruct
-	implementation 'org.mapstruct:mapstruct:1.4.1.Final'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
-
 	// S3
 	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.174'
+
 
 	// 크롤링
 	implementation 'org.jsoup:jsoup:1.13.1'
@@ -46,6 +43,7 @@ dependencies {
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
+
 	// QueryDSL 설정
 	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
 	annotationProcessor 'com.querydsl:querydsl-apt:5.1.0:jakarta'
@@ -58,6 +56,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {

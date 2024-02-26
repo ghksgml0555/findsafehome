@@ -1,4 +1,4 @@
-package com.swyg.findingahomesafely;
+package com.swyg.findingahomesafely.config;
 
 import com.swyg.findingahomesafely.jwt.JwtAccessDeniedHandler;
 import com.swyg.findingahomesafely.jwt.JwtAuthenticationEntryPoint;
@@ -75,7 +75,7 @@ public class SecurityConfig{
 
                 .authorizeHttpRequests((authorizeRequests)->
                         authorizeRequests
-                                .requestMatchers("/login","/signup").permitAll() // 인증없어도 되는 페이지
+                                .requestMatchers("/login","/signup","/").permitAll() // 인증없어도 되는 페이지
                                 .anyRequest().authenticated() // 그 외 인증 없이 접근X
                 )
 

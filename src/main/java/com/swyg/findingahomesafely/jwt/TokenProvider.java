@@ -1,6 +1,6 @@
 package com.swyg.findingahomesafely.jwt;
 
-import com.swyg.findingahomesafely.dto.TokenDto;
+import com.swyg.findingahomesafely.dto.loginDto.TokenDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

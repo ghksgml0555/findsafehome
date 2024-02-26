@@ -1,6 +1,6 @@
 package com.swyg.findingahomesafely.repository;
 
-import com.swyg.findingahomesafely.domain.RefreshToken;
+import com.swyg.findingahomesafely.domain.member.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
