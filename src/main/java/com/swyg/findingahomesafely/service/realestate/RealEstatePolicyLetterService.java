@@ -1,4 +1,4 @@
-package com.swyg.findingahomesafely.service;
+package com.swyg.findingahomesafely.service.realestate;
 
 import com.swyg.findingahomesafely.domain.realestate.RealEstatePolicyLetter;
 import com.swyg.findingahomesafely.dto.realestateDto.ReqRealEstatePolicyLetter;

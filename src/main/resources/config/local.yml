@@ -25,3 +25,16 @@ jwt:
 
 crawling:
   url: https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp?search_section=p_sec_2
+
+cloud:
+  aws:
+    s3:
+      bucket: swyg-bucket
+    credentials:
+      access-key: AKIAXYKJS7QBIFKGKRAE
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

@@ -2,9 +2,7 @@ package com.swyg.findingahomesafely.controller.realestate;
 
 import com.swyg.findingahomesafely.common.response.ResponseResult;
 import com.swyg.findingahomesafely.dto.realestateDto.ResRealEstateLatestPolicy;
-import com.swyg.findingahomesafely.service.RealEstateLatestPolicyService;
-import com.swyg.findingahomesafely.service.crawling.CrawlingInterface;
-import com.swyg.findingahomesafely.service.crawling.CrawlingServiceImpl;
+import com.swyg.findingahomesafely.service.realestate.RealEstateLatestPolicyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
