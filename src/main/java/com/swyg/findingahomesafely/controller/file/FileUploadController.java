@@ -8,6 +8,7 @@ import com.swyg.findingahomesafely.dto.fileUploadDto.ReqFinishUpload;
 import com.swyg.findingahomesafely.dto.fileUploadDto.ReqPreSignedUploadInitiate;
 import com.swyg.findingahomesafely.dto.fileUploadDto.ReqPreSignedUrlCreate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,9 @@ import java.util.List;
 public class FileUploadController {
 
     private final AmazonS3 amazonS3Client;
-    private final String bucket = "swyg-bucket";
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
     private final String S3FilePath = "test/";
 
     @PostMapping("/initiate-upload")

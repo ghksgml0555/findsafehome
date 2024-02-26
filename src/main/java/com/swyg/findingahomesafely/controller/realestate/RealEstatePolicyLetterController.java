@@ -3,7 +3,7 @@ package com.swyg.findingahomesafely.controller.realestate;
 import com.swyg.findingahomesafely.common.response.ResponseResult;
 import com.swyg.findingahomesafely.dto.realestateDto.ReqRealEstatePolicyLetter;
 import com.swyg.findingahomesafely.dto.realestateDto.ResRealEstatePolicyLetter;
-import com.swyg.findingahomesafely.service.RealEstatePolicyLetterService;
+import com.swyg.findingahomesafely.service.realestate.RealEstatePolicyLetterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
