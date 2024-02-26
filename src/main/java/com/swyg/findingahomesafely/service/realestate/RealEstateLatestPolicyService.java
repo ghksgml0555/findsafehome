@@ -1,4 +1,4 @@
-package com.swyg.findingahomesafely.service;
+package com.swyg.findingahomesafely.service.realestate;
 
 import com.swyg.findingahomesafely.dto.realestateDto.ResRealEstateLatestPolicy;
 import com.swyg.findingahomesafely.service.crawling.CrawlingInterface;
