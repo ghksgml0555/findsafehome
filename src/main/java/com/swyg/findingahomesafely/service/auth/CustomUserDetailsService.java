@@ -1,6 +1,6 @@
-package com.swyg.findingahomesafely.service;
+package com.swyg.findingahomesafely.service.auth;
 
-import com.swyg.findingahomesafely.domain.Member;
+import com.swyg.findingahomesafely.domain.member.Member;
 import com.swyg.findingahomesafely.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

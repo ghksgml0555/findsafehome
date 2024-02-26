@@ -1,4 +1,4 @@
-package com.swyg.findingahomesafely.dto;
+package com.swyg.findingahomesafely.dto.loginDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
