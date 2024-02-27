@@ -75,7 +75,9 @@ public class SecurityConfig{
 
                 .authorizeHttpRequests((authorizeRequests)->
                         authorizeRequests
-                                .requestMatchers("/login","/signup","/re/**","/").permitAll() // 인증없어도 되는 페이지
+                                .requestMatchers("/login","/signup","/").permitAll() // 인증없어도 되는 페이지
+                                .requestMatchers("/swagger-ui/**","/v3/**").permitAll()
+                                .requestMatchers("/re/**").permitAll()
                                 .anyRequest().authenticated() // 그 외 인증 없이 접근X
                 )
 
