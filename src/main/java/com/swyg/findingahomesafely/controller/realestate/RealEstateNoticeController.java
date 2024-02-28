@@ -1,9 +1,13 @@
 package com.swyg.findingahomesafely.controller.realestate;
 
+import com.swyg.findingahomesafely.common.codeconst.YN;
 import com.swyg.findingahomesafely.common.response.ResponseResult;
+import com.swyg.findingahomesafely.domain.image.Image;
+import com.swyg.findingahomesafely.domain.realestate.RealEstateNotice;
 import com.swyg.findingahomesafely.dto.realestateDto.ReqRealEstateNotice;
 import com.swyg.findingahomesafely.dto.realestateDto.ResRealEstateNotice;
 import com.swyg.findingahomesafely.dto.realestateDto.ResRealEstatePolicyLetter;
+import com.swyg.findingahomesafely.repository.RealEstateNoticeRepository;
 import com.swyg.findingahomesafely.service.realestate.RealEstateNoticeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,6 +27,7 @@ import java.util.List;
 public class RealEstateNoticeController {
 
     private final RealEstateNoticeService realEstateNoticeService;
+    private final RealEstateNoticeRepository realEstateNoticeRepository;
 
     @Operation(summary = "부동산 정책 공지 전체 조회", description = "부동산 정책 공지 데이터 전체를 가져옵니다.")
     @ApiResponses({
@@ -40,6 +45,29 @@ public class RealEstateNoticeController {
     public ResponseResult<?> saveRealEstateNotice(@RequestBody ReqRealEstateNotice request){
 
         realEstateNoticeService.saveRealEstateNotice(request);
+
+        return ResponseResult.body();
+    }
+
+    @PostMapping("/save-loacl")
+    public ResponseResult<?> saveLoacl(){
+
+
+        Image ThumbnailImage = Image.builder()
+                .imageUrl("https://swyg-bucket.s3.ap-northeast-2.amazonaws.com/static/1000000463_main_028.jpg")
+                .build();
+        Image image = Image.builder()
+                .imageUrl("https://swyg-bucket.s3.ap-northeast-2.amazonaws.com/static/gv10000329482_1.jpg")
+                .build();
+
+        RealEstateNotice realEstateNotice = RealEstateNotice.builder()
+                .thumbnailImgUrl(ThumbnailImage)
+                .contentImgUrl(image)
+                .useYn(YN.N)
+                .build();
+
+
+        realEstateNoticeRepository.save(realEstateNotice);
 
         return ResponseResult.body();
     }

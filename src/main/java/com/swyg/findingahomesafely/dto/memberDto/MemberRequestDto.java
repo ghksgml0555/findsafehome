@@ -1,6 +1,6 @@
 package com.swyg.findingahomesafely.dto.memberDto;
 
-import com.swyg.findingahomesafely.domain.member.Authority;
+import com.swyg.findingahomesafely.common.codeconst.Authority;
 import com.swyg.findingahomesafely.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

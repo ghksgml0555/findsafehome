@@ -12,7 +12,18 @@ spring:
     password: 12341234
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  date:
+    web:
+      pageable:
+        default-page-size: 10
   servlet:
     multipart:
       enabled: true
