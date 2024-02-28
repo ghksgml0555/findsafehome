@@ -1,5 +1,6 @@
 package com.swyg.findingahomesafely.service.auth;
 
+import com.swyg.findingahomesafely.common.exception.SwygException;
 import com.swyg.findingahomesafely.domain.member.Member;
 import com.swyg.findingahomesafely.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return memberRepository.findByEmail(username)
                 .map(this::createUserDetails)
-                .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
+                .orElseThrow(() -> new SwygException("NU0001",username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴

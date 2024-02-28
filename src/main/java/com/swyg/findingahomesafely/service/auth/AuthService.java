@@ -12,6 +12,8 @@ import com.swyg.findingahomesafely.jwt.TokenProvider;
 import com.swyg.findingahomesafely.repository.MemberRepository;
 import com.swyg.findingahomesafely.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -40,26 +42,33 @@ public class AuthService {
 
     @Transactional
     public TokenDto login(LoginDto loginDto) {
-        // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
-        UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
+        try{
+            // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
+            UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
 
-        // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
-        //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
+            //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+            // 3. 인증 정보를 기반으로 JWT 토큰 생성
+            TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
-        // 4. RefreshToken 저장
-        RefreshToken refreshToken = RefreshToken.builder()
-                .key(authentication.getName())
-                .value(tokenDto.getRefreshToken())
-                .build();
+            // 4. RefreshToken 저장
+            RefreshToken refreshToken = RefreshToken.builder()
+                    .key(authentication.getName())
+                    .value(tokenDto.getRefreshToken())
+                    .build();
 
-        refreshTokenRepository.save(refreshToken);
+            refreshTokenRepository.save(refreshToken);
 
-        // 5. 토큰 발급
-        return tokenDto;
+            // 5. 토큰 발급
+            return tokenDto;
+        }catch (BadCredentialsException e){
+            throw new SwygException("FP0001","비밀번호가 일치하지 않습니다.");
+        }catch (InternalAuthenticationServiceException e){
+            throw new SwygException("NU0001","데이터베이스에 멤버가 존재하지 않습니다");
+        }
+
     }
 
     @Transactional
