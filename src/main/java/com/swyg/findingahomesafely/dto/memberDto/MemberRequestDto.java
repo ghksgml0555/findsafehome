@@ -1,6 +1,6 @@
 package com.swyg.findingahomesafely.dto.memberDto;
 
-import com.swyg.findingahomesafely.domain.member.Authority;
+import com.swyg.findingahomesafely.common.codeconst.Authority;
 import com.swyg.findingahomesafely.domain.member.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
