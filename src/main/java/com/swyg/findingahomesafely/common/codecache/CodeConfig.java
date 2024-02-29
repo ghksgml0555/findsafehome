@@ -56,7 +56,6 @@ public class CodeConfig {
 
 	/**
 	 * 오류 코드 조회
-	 * @date 2022-07-29 18:26:30
 	 */
 	public void getErrorCode() {
 		List<SyErrMsgI> syErrMsgI = testRepository.findAll();
@@ -78,7 +77,7 @@ public class CodeConfig {
 	}
 
 	/**
-	 * 오류 메시지 조회
+	 * 오류 메시지 조회 (커스텀 익셉션)
 	 */
 	public static String getErrorMessage(String errorCode) {
 		String result = "시스템 오류입니다. 관리자에게 문의하세요";

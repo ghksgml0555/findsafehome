@@ -1,6 +1,8 @@
 package com.swyg.findingahomesafely.domain.realestate;
 
+import com.swyg.findingahomesafely.common.codeconst.YN;
 import com.swyg.findingahomesafely.domain.Timestamped;
+import com.swyg.findingahomesafely.domain.image.Image;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,15 +18,22 @@ public class RealEstateNotice extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "THUMBNAIL_IMG_URL",unique = true)
-    private String thumbnailImgUrl;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "THUMBNAIL_IMG_URL")
+    private Image thumbnailImgUrl;
 
-    @Column(name = "CONTENT_IMG_URL",unique = true)
-    private String contentImgUrl;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "CONTENT_IMG_URL")
+    private Image contentImgUrl;
+
+    @Column(name = "USE_YN",nullable = false)
+    @Enumerated(EnumType.STRING)
+    private YN useYn = YN.N;
 
     @Builder
-    public RealEstateNotice(String thumbnailImgUrl, String contentImgUrl) {
+    public RealEstateNotice(Image thumbnailImgUrl, Image contentImgUrl, YN useYn) {
         this.thumbnailImgUrl = thumbnailImgUrl;
         this.contentImgUrl = contentImgUrl;
+        this.useYn = useYn;
     }
 }

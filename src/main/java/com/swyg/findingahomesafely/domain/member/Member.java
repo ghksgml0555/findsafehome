@@ -1,5 +1,6 @@
 package com.swyg.findingahomesafely.domain.member;
 
+import com.swyg.findingahomesafely.common.codeconst.Authority;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -24,8 +24,10 @@ public class RealEstateNoticeService {
         List<ResRealEstateNotice> res = all.stream().map(
                 item -> {
                     return ResRealEstateNotice.builder()
-                            .thumbnailImgUrl(item.getThumbnailImgUrl())
-                            .contentImgUrl(item.getContentImgUrl())
+                            .thumbnailImgUrl(item.getThumbnailImgUrl().getImageUrl())
+                            .contentImgUrl(item.getContentImgUrl().getImageUrl())
+                            .useYn(String.valueOf(item.getUseYn()))
+                            .lastChngRegDttm(item.getLastChngRegDttm())
                             .build();
                 }
         ).collect(Collectors.toList());
@@ -36,8 +38,8 @@ public class RealEstateNoticeService {
     public void saveRealEstateNotice(ReqRealEstateNotice request) {
 
         RealEstateNotice realEstateNotice = RealEstateNotice.builder()
-                .thumbnailImgUrl(request.getThumbnailImgUrl())
-                .contentImgUrl(request.getContentImgUrl())
+//                .thumbnailImgUrl(request.getThumbnailImgUrl())
+//                .contentImgUrl(request.getContentImgUrl())
                 .build();
 
         realEstateNoticeRepository.save(realEstateNotice);
