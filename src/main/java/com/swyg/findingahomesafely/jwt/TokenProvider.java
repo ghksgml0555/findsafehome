@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import static com.swyg.findingahomesafely.domain.member.Authority.ROLE_USER;
+
 @Slf4j
 @Component
 public class TokenProvider { //jwt 토큰 관련 암호화, 복호화, 검증
@@ -67,6 +69,33 @@ public class TokenProvider { //jwt 토큰 관련 암호화, 복호화, 검증
                 .build();
     }
 
+    //소셜로그인시 jwt토큰 발행
+    public TokenDto generateTokenDtoForSocial(String uid){
+        long now = (new Date()).getTime();
+
+        // Access Token 생성
+        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        String accessToken = Jwts.builder()
+                .setSubject(uid)
+                .claim(AUTHORITIES_KEY, ROLE_USER)
+                .setExpiration(accessTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+
+        // Refresh Token 생성
+        String refreshToken = Jwts.builder()
+                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+
+        return TokenDto.builder()
+                .grantType(BEARER_TYPE)
+                .accessToken(accessToken)
+                .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
+                .refreshToken(refreshToken)
+                .build();
+    }
+
     // JWT토큰을 복호화하여 토큰에 들어있는 정보를 꺼냅니다.
     public Authentication getAuthentication(String accessToken) {
         // 토큰 복호화
@@ -87,6 +116,7 @@ public class TokenProvider { //jwt 토큰 관련 암호화, 복호화, 검증
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
+
     //토큰 검증
     public boolean validateToken(String token) {
         try {

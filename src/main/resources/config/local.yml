@@ -29,6 +29,10 @@ spring:
       enabled: true
       max-file-size: 100MB # 한개 파일의 최대 사이즈 (default: 1MB)
       max-request-size: 100MB # 한개 요청의 최대 사이즈 (default: 10MB)
+  data:
+    redis:
+      host: localhost
+      port: 6379
   mail:
     host: smtp.gmail.com
     port: 587
@@ -45,11 +49,24 @@ spring:
           timeout: 5000
           writetimeout: 5000
     auth-code-expiration-millis: 180000 #3분
-  data:
-    redis:
-      host: localhost
-      port: 6379
-
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: 8bf5964235d73fa04a1e4f83691f663b
+            client-secret: ${kakao.clientsecret}
+            redirect-uri: http://localhost:7000/login/oauth2/code/kakao
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            scope: profile_nickname, account_email
+            client-name: kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
 jwt:
   #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
