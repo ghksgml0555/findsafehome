@@ -17,8 +17,17 @@ public class RealEstateLatestPolicyService {
         this.crawlingInterface = crawlingService;
     }
 
-    public List<ResRealEstateLatestPolicy> getRealEstateLatestPolicyList(){
-        return crawlingInterface.getListEnterTitleAndEnterUrl();
+    public ResRealEstateLatestPolicy selectRealEstateLatestPolicyPaging(String page){
+        crawlingInterface.makeCrawling(page+1);
+
+        ResRealEstateLatestPolicy res = ResRealEstateLatestPolicy.builder()
+                .totalSize(crawlingInterface.getSize())
+                .startPage(crawlingInterface.getStartPage())
+                .endPage(crawlingInterface.getEndPage())
+                .list(crawlingInterface.getListEnterTitleAndEnterUrl())
+                .build();
+
+        return res;
     }
 
 }
