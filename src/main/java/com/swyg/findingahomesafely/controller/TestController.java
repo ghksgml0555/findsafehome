@@ -41,8 +41,8 @@ public class TestController {
 
         RealEstatePolicyLetter realEstatePolicyLetter = RealEstatePolicyLetter.builder()
                 .title("부동산 정책 레터 제목 2")
-                .thumbnailImgUrl("https://swyg-bucket.s3.ap-northeast-2.amazonaws.com/static/thumbnail2.jpg")
-                .contentImgUrl("https://swyg-bucket.s3.ap-northeast-2.amazonaws.com/static/thumbnail22.jpg")
+//                .thumbnailImgUrl("https://swyg-bucket.s3.ap-northeast-2.amazonaws.com/static/thumbnail2.jpg")
+//                .contentImgUrl("https://swyg-bucket.s3.ap-northeast-2.amazonaws.com/static/thumbnail22.jpg")
                 .author("강혜수")
                 .build();
 
@@ -57,7 +57,7 @@ public class TestController {
         SyErrMsgI syErrMsgI = testRepository.findByErrCd("C99999").orElseThrow(
                 () -> new SwygException("C99999"));
         System.out.println("===========================================================");
-        System.out.println(syErrMsgI.getCreatedAt());
+        System.out.println(syErrMsgI.getLastChngRegDttm());
 
         List<SyErrMsgI> all = testRepository.findAll();
 
