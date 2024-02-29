@@ -18,7 +18,7 @@ public class RealEstateLatestPolicyService {
     }
 
     public ResRealEstateLatestPolicy selectRealEstateLatestPolicyPaging(String page){
-        crawlingInterface.makeCrawling(page);
+        crawlingInterface.makeCrawling(page+1);
 
         ResRealEstateLatestPolicy res = ResRealEstateLatestPolicy.builder()
                 .totalSize(crawlingInterface.getSize())

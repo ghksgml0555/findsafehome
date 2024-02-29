@@ -28,7 +28,7 @@ public class CrawlingServiceImpl implements CrawlingInterface{
 
     private String size;
 
-    private String startPage = "1";
+    private String startPage = "0";
     private String endPage;
 
     @Override
@@ -52,7 +52,7 @@ public class CrawlingServiceImpl implements CrawlingInterface{
 
         //시작 페이지, 마지막 페이지
         int temp = (int) Math.ceil(Integer.parseInt(totalSize)/10.0);
-        this.setEndPage(String.valueOf(temp));
+        this.setEndPage(String.valueOf(temp-1));
 
         List<RealEstateLatestPolicy> list = new ArrayList<>();
         for (int i=1; i<=10; i++) {

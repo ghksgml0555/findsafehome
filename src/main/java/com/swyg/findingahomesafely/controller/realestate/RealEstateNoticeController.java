@@ -41,14 +41,16 @@ public class RealEstateNoticeController {
         return ResponseResult.body(res);
     }
 
-    @PostMapping("/saveOne")
-    public ResponseResult<?> saveRealEstateNotice(@RequestBody ReqRealEstateNotice request){
+//    @Operation(summary = "부동산 정책 공지 단건 저장", description = "부동산 정책 공지 데이터 하나를 저장합니다.")
+//    @PostMapping("/saveOne")
+//    public ResponseResult<?> saveRealEstateNotice(@RequestBody ReqRealEstateNotice request){
+//
+//        realEstateNoticeService.saveRealEstateNotice(request);
+//
+//        return ResponseResult.body();
+//    }
 
-        realEstateNoticeService.saveRealEstateNotice(request);
-
-        return ResponseResult.body();
-    }
-
+    @Operation(summary = "부동산 정책 공지 저장(로컬용)", description = "부동산 정책 공지 한건을 저장합니다.(로컬용)")
     @PostMapping("/save-loacl")
     public ResponseResult<?> saveLoacl(){
 

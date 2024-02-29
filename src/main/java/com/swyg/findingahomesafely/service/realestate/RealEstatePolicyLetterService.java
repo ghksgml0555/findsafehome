@@ -47,16 +47,10 @@ public class RealEstatePolicyLetterService {
     public void saveRealEstatePolicyLetter(ReqRealEstatePolicyLetter request) {
 
         Image ThumbnailImage = Image.builder()
-                .imageUrl("1111")
+                .imageUrl(request.getThumbnailImgUrl())
                 .build();
         Image image = Image.builder()
-                .imageUrl("2222")
-                .build();
-
-        RealEstateNotice realEstateNotice = RealEstateNotice.builder()
-                .thumbnailImgUrl(ThumbnailImage)
-                .contentImgUrl(image)
-                .useYn(YN.N)
+                .imageUrl(request.getContentImgUrl())
                 .build();
 
         RealEstatePolicyLetter realEstatePolicyLetter = RealEstatePolicyLetter.builder()
@@ -69,7 +63,6 @@ public class RealEstatePolicyLetterService {
         realEstatePolicyLetterRepository.save(realEstatePolicyLetter);
 
     }
-
 
     public  ResRealEstatePolicyLetter selectRealEstatePolicyLetterPage(Pageable pageable) {
 
