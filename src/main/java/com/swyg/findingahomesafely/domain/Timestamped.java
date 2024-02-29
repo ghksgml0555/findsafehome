@@ -15,23 +15,23 @@ import java.time.format.DateTimeFormatter;
 public abstract class Timestamped { // abstract는 상속으로만 사용할 수 있다
 
     @CreatedDate // 생성일자임을 나타냅니다.
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "FRST_REG_DTTM")
+    private LocalDateTime frstRegDttm;
 
     //TODO 형식 프론트랑 맞추기.
     @LastModifiedDate // 마지막 수정일자임을 나타냅니다.
-    @Column(name = "modified_at")
-    private LocalDateTime modifiedAt;
+    @Column(name = "LAST_CHNG_DTTM")
+    private LocalDateTime lastChngRegDttm;
 
 //    @PrePersist
 //    public void onPrePersist(){
 //        this.createdAt = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
-//        this.modifiedAt = this.modifiedAt;
+//        this.lastChngRegDttm = this.lastChngRegDttm;
 //    }
 //
 //    @PreUpdate
 //    public void onPreUpdate(){
-//        this.modifiedAt = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
+//        this.lastChngRegDttm = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
 //    }
 
 
