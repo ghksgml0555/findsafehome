@@ -20,7 +20,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import static com.swyg.findingahomesafely.domain.member.Authority.ROLE_USER;
+import static com.swyg.findingahomesafely.common.codeconst.Authority.ROLE_USER;
+
 
 @Slf4j
 @Component
