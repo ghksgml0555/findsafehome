@@ -37,4 +37,8 @@ public class Member {
     @Column(name="authority")
     private Authority authority;
 
+    public void changePassword(String newPassword){
+        this.password = newPassword;
+    }
+
 }
