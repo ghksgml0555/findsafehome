@@ -7,11 +7,14 @@ import com.swyg.findingahomesafely.dto.loginDto.LoginResponseDto;
 import com.swyg.findingahomesafely.dto.loginDto.TokenDto;
 import com.swyg.findingahomesafely.dto.loginDto.TokenRequestDto;
 import com.swyg.findingahomesafely.dto.memberDto.MemberRequestDto;
+import com.swyg.findingahomesafely.dto.passwordFindDto.PasswordFindDto;
 import com.swyg.findingahomesafely.dto.realestateDto.ResRealEstateLatestPolicy;
 import com.swyg.findingahomesafely.dto.realestateDto.ResRealEstatePolicyLetter;
 import com.swyg.findingahomesafely.service.auth.AuthService;
 import com.swyg.findingahomesafely.service.auth.GoogleService;
 import com.swyg.findingahomesafely.service.auth.KakaoService;
+import com.swyg.findingahomesafely.service.code.CodeService;
+import com.swyg.findingahomesafely.service.mail.MailService;
 import com.swyg.findingahomesafely.util.SecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,6 +40,7 @@ public class AuthController {
     private final AuthService authService;
     private final KakaoService kakaoService;
     private final GoogleService googleService;
+    private final MailService mailService;
 
     @Operation(summary = "자체 이메일 회원가입")
     @ApiResponses({
@@ -60,6 +64,27 @@ public class AuthController {
     public ResponseResult<?> login(@RequestBody LoginDto loginDto) {
         return ResponseResult.body(authService.login(loginDto));
         //return ResponseEntity.ok(authService.login(loginDto));
+    }
+
+    @Operation(summary = "비밀번호 찾기(임시비밀번호 발급)")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "임시비밀번호 발급성공")
+    })
+    @PostMapping("/findpassword")
+    public ResponseResult<?> findPassword(@RequestBody PasswordFindDto passwordFindDto){
+        if(authService.userValidCheck(passwordFindDto)==true){
+            String tempPassword = authService.createTempPassword();
+            String toEmail = passwordFindDto.getEmail();
+            String title = "세로운집 임시 비밀번호";
+            mailService.sendEmail(toEmail, title, tempPassword);
+
+            authService.changeTempPassword(toEmail, tempPassword);
+
+            return ResponseResult.body();
+        }
+        else {
+            throw new SwygException("NEM0001","주어진 정보와 일치하는 멤버가 없습니다.");
+        }
     }
 
     //인가코드가 /login/oauth2/code/kakao로 code 파라미터로 넘어옴
