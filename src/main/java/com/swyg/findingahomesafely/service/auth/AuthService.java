@@ -8,6 +8,7 @@ import com.swyg.findingahomesafely.dto.loginDto.TokenDto;
 import com.swyg.findingahomesafely.dto.loginDto.TokenRequestDto;
 import com.swyg.findingahomesafely.dto.memberDto.MemberRequestDto;
 import com.swyg.findingahomesafely.dto.memberDto.MemberResponseDto;
+import com.swyg.findingahomesafely.dto.passwordFindDto.PasswordFindDto;
 import com.swyg.findingahomesafely.jwt.TokenProvider;
 import com.swyg.findingahomesafely.repository.MemberRepository;
 import com.swyg.findingahomesafely.repository.RefreshTokenRepository;
@@ -20,6 +21,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +75,38 @@ public class AuthService {
             throw new SwygException("NU0001","데이터베이스에 멤버가 존재하지 않습니다");
         }
 
+    }
+
+    public boolean userValidCheck(PasswordFindDto passwordFindDto){
+        Member findMember = memberRepository.findByEmail(passwordFindDto.getEmail()).get();
+        if(findMember!=null && findMember.getName().equals(passwordFindDto.getName()) &&
+        findMember.getDateOfBirth().equals(passwordFindDto.getDateOfBirth()) &&
+        findMember.getTelNo().equals(passwordFindDto.getTelNo())){
+            return true;
+        }
+        else return false;
+    }
+
+    public String createTempPassword(){
+        int length = 6;
+        try {
+            Random random = SecureRandom.getInstanceStrong();
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < length; i++) {
+                builder.append(random.nextInt(10));
+            }
+            builder.append("@");
+            builder.append("@");
+            return builder.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Transactional
+    public void changeTempPassword(String email, String tempPassword){
+        Member member = memberRepository.findByEmail(email).get();
+        member.changePassword(passwordEncoder.encode(tempPassword));
     }
 
     @Transactional
