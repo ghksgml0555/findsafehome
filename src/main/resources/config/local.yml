@@ -55,7 +55,7 @@ spring:
         registration:
           kakao:
             client-id: 8bf5964235d73fa04a1e4f83691f663b
-            client-secret: ${kakao.clientsecret}
+            client-secret: MJsbC9hog6YvfonJflTpIyY4lDYQA2gF
             redirect-uri: http://localhost:7000/login/oauth2/code/kakao
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
@@ -64,7 +64,7 @@ spring:
 
           google:
             client-id: 824362037923-shonp6ke3e7glidd67u03c0m6ucuj671.apps.googleusercontent.com
-            client-secret: ${google.secret}
+            client-secret: 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
             scope: profile, email
 
         provider:
@@ -78,7 +78,7 @@ jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
 
 crawling:
-  url: https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp?search_section=p_sec_2&search=&search_gubun=1&search_gubun1=all&srch_usr_titl=Y&srch_usr_ctnt=&psize=10&search_regdate_s=2023-02-27&search_regdate_e=2024-02-27&srch_cate=&srch_dept_nm=&search_kind=&search_gbn=&lst_gbn=T&lcmspage=
+  url: https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp?search_section=p_sec_2&search=&search_gubun=1&search_gubun1=all&srch_usr_titl=Y&srch_usr_ctnt=&psize=10&search_regdate_s=2023-02-27&search_regdate_e=&srch_cate=&srch_dept_nm=&search_kind=&search_gbn=&lst_gbn=T&lcmspage=
 
 cloud:
   aws:
