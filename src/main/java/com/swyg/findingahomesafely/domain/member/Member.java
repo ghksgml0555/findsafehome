@@ -18,17 +18,27 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="email")
     private String email;
 
+    @Column(name="password")
     private String password;
 
+    @Column(name="name")
     private String name;
 
+    @Column(name="date_of_birth")
     private String dateOfBirth;
 
+    @Column(name="tel_no")
     private String telNo;
 
     @Enumerated(EnumType.STRING)
+    @Column(name="authority")
     private Authority authority;
+
+    public void changePassword(String newPassword){
+        this.password = newPassword;
+    }
 
 }
