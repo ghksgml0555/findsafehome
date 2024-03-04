@@ -33,6 +33,9 @@ public class Member {
     @Column(name="TEL_NO")
     private String telNo;
 
+    @Column(name="IS_DELETE")
+    private boolean isDelete = false;
+
     @Enumerated(EnumType.STRING)
     @Column(name="AUTHORITY")
     private Authority authority;
@@ -46,6 +49,10 @@ public class Member {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.telNo = telNo;
+    }
+
+    public void deleteTrue(){
+        this.isDelete=true;
     }
 
 }

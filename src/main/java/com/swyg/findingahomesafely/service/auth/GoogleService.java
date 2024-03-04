@@ -138,7 +138,7 @@ public class GoogleService {
         Member googleMember = memberRepository.findByEmail(email).orElse(null);
 
         if (googleMember == null) {    //회원가입
-            googleMember= new Member(uid,email,"",name,"","",ROLE_USER);
+            googleMember= new Member(uid,email,"",name,"","",false,ROLE_USER);
             memberRepository.save(googleMember);
         }
         //토큰 생성

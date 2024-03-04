@@ -34,7 +34,9 @@ public class KakaoService {
 
     public LoginResponseDto kakaoLogin(String code){
         // 1. "인가 코드"로 "액세스 토큰" 요청
-        String accessToken = getAccessToken(code, "http://localhost:7000/login/oauth2/code/kakao");
+        String redirectUrl = environment.getProperty("spring.security.oauth2.client.registration.kakao.redirect-uri");
+
+        String accessToken = getAccessToken(code, redirectUrl);
 
         // 2. 토큰으로 카카오 API 호출
         HashMap<String, Object> userInfo= getKakaoUserInfo(accessToken);
@@ -54,7 +56,7 @@ public class KakaoService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "8bf5964235d73fa04a1e4f83691f663b");
+        body.add("client_id", "335d3b85731ba1f046c3d07aa53d735f");
         body.add("redirect_uri", redirectUri);
         body.add("code", code);
 
@@ -131,7 +133,7 @@ public class KakaoService {
         Member kakaoMember = memberRepository.findByEmail(kakaoEmail).orElse(null);
 
         if (kakaoMember == null) {    //회원가입
-            kakaoMember= new Member(uid,kakaoEmail,"",nickName,"","",ROLE_USER);
+            kakaoMember= new Member(uid,kakaoEmail,"",nickName,"","",false,ROLE_USER);
             memberRepository.save(kakaoMember);
         }
         //토큰 생성
