@@ -38,6 +38,7 @@ public class MemberRequestDto {
                 .name(name)
                 .dateOfBirth(dateOfBirth)
                 .telNo(telNo)
+                .isDelete(false)
                 .authority(Authority.ROLE_USER)
                 .build();
     }

@@ -49,6 +49,11 @@ public class AuthService {
     @Transactional
     public TokenDto login(LoginDto loginDto) {
         try{
+            Member member = memberRepository.findByEmail(loginDto.getEmail()).get();
+            if(member.isDelete() == true){
+                throw new SwygException("DM0001","탈퇴한 회원입니다.");
+            }
+
             // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
             UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
 
