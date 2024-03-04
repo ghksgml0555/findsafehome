@@ -39,7 +39,8 @@ public class CodeService { //인증번호 생성, 검증
     private long authCodeExpirationMillis;
 
     public void sendCodeToEmail(String toEmail) {
-        if (memberRepository.existsByEmail(toEmail)) {
+        if (memberRepository.existsByEmail(toEmail)
+                && memberRepository.findByEmail(toEmail).get().isSignup()) {
             throw new SwygException("SU0001","이미 가입되어 있는 유저(이메일)입니다");
         }
 
@@ -84,7 +85,7 @@ public class CodeService { //인증번호 생성, 검증
             throw new SwygException("CF0001","인증번호가 일치하지 않습니다.");
         }
         else{
-            MemberRequestDto memberRequestDto = new MemberRequestDto(email,"","","","");
+            MemberRequestDto memberRequestDto = new MemberRequestDto(email,"","","","",false);
             Member member = memberRequestDto.toMember(passwordEncoder);
             memberRepository.save(member);
         }

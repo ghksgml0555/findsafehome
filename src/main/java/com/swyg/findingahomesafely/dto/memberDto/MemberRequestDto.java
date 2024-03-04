@@ -31,6 +31,8 @@ public class MemberRequestDto {
     @NotBlank(message = "전화번호는 필수 입력 값입니다.")
     private String telNo;
 
+    private boolean isSignup;
+
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .email(email)
@@ -38,6 +40,7 @@ public class MemberRequestDto {
                 .name(name)
                 .dateOfBirth(dateOfBirth)
                 .telNo(telNo)
+                .isSignup(isSignup)
                 .isDelete(false)
                 .authority(Authority.ROLE_USER)
                 .build();
