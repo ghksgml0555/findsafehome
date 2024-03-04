@@ -36,6 +36,9 @@ public class Member {
     @Column(name="IS_DELETE")
     private boolean isDelete = false;
 
+    @Column(name="IS_SIGNUP")
+    private boolean isSignup;
+
     @Enumerated(EnumType.STRING)
     @Column(name="AUTHORITY")
     private Authority authority;
@@ -54,5 +57,7 @@ public class Member {
     public void deleteTrue(){
         this.isDelete=true;
     }
+
+    public void signupTrue() { this.isSignup=true;}
 
 }
