@@ -2,12 +2,15 @@ package com.swyg.findingahomesafely.service.code;
 
 import com.swyg.findingahomesafely.common.exception.SwygException;
 import com.swyg.findingahomesafely.domain.member.Member;
+import com.swyg.findingahomesafely.dto.memberDto.MemberRequestDto;
+import com.swyg.findingahomesafely.dto.memberDto.MemberResponseDto;
 import com.swyg.findingahomesafely.repository.MemberRepository;
 import com.swyg.findingahomesafely.service.mail.MailService;
 import com.swyg.findingahomesafely.service.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,10 +33,16 @@ public class CodeService { //인증번호 생성, 검증
 
     private final RedisService redisService;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Value("${spring.mail.auth-code-expiration-millis}")
     private long authCodeExpirationMillis;
 
     public void sendCodeToEmail(String toEmail) {
+        if (memberRepository.existsByEmail(toEmail)) {
+            throw new SwygException("SU0001","이미 가입되어 있는 유저(이메일)입니다");
+        }
+
         this.checkDuplicatedEmail(toEmail);
         String title = "세로운집 이메일 인증 번호";
         String authCode = this.createCode();
@@ -73,6 +82,11 @@ public class CodeService { //인증번호 생성, 검증
 
         if (!authResult) {
             throw new SwygException("CF0001","인증번호가 일치하지 않습니다.");
+        }
+        else{
+            MemberRequestDto memberRequestDto = new MemberRequestDto(email,"","","","");
+            Member member = memberRequestDto.toMember(passwordEncoder);
+            memberRepository.save(member);
         }
     }
 }

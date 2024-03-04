@@ -38,17 +38,24 @@ public class AuthService {
 
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
-        if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
-            throw new SwygException("SU0001","이미 가입되어 있는 유저(이메일)입니다");
+        if (!memberRepository.existsByEmail(memberRequestDto.getEmail())) {
+            throw new SwygException("NV0001","이메일인증이 되지 않았습니다.");
         }
-
+        Member validationMember = memberRepository.findByEmail(memberRequestDto.getEmail()).get();
         Member member = memberRequestDto.toMember(passwordEncoder);
-        return MemberResponseDto.of(memberRepository.save(member));
+
+        validationMember.changeDetail(member.getPassword(), member.getName(), member.getDateOfBirth(), member.getTelNo());
+        return MemberResponseDto.of(memberRepository.save(validationMember));
     }
 
     @Transactional
     public TokenDto login(LoginDto loginDto) {
         try{
+            Member member = memberRepository.findByEmail(loginDto.getEmail()).get();
+            if(member.isDelete() == true){
+                throw new SwygException("DM0001","탈퇴한 회원입니다.");
+            }
+
             // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
             UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
 

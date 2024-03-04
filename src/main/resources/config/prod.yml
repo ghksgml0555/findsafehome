@@ -47,7 +47,7 @@ spring:
     auth-code-expiration-millis: 180000 #3분
   data:
     redis:
-      host: localhost
+      host: 43.200.250.18
       port: 6379
 
 
