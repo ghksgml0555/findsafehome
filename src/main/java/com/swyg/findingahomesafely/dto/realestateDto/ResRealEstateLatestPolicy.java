@@ -30,11 +30,13 @@ public class ResRealEstateLatestPolicy {
 
         private String enterTitle;
         private String enterUrl;
+        private String regDate;
 
         @Builder
-        public RealEstateLatestPolicy(String enterTitle, String enterUrl) {
+        public RealEstateLatestPolicy(String enterTitle, String enterUrl,String regDate) {
             this.enterTitle = enterTitle;
             this.enterUrl = enterUrl;
+            this.regDate = regDate;
         }
     }
 }

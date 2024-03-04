@@ -31,7 +31,7 @@ public class RealEstateLatestPolicyController {
             @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ResRealEstateLatestPolicy.class)))
     })
     @GetMapping("/selectPaging")
-    public ResponseResult<?> selectRealEstateLatestPolicyPaging(@RequestParam("page") String page){
+    public ResponseResult<?> selectRealEstateLatestPolicyPaging(@RequestParam("page") int page){
 
         ResRealEstateLatestPolicy res = realEstateLatestPolicyService.selectRealEstateLatestPolicyPaging(page);
 

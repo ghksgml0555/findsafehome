@@ -32,13 +32,13 @@ public class CrawlingServiceImpl implements CrawlingInterface{
     private String endPage;
 
     @Override
-    public void makeCrawling(String page){
+    public void makeCrawling(int page){
 
         Connection conn = null;
         Document document = null;
 
         try{
-            conn = Jsoup.connect(crawlingUrl+page);
+            conn = Jsoup.connect(crawlingUrl+(page));
             document = conn.get();
         }catch (IOException e) {
             e.printStackTrace();
@@ -51,19 +51,23 @@ public class CrawlingServiceImpl implements CrawlingInterface{
         this.setSize(totalSize);
 
         //시작 페이지, 마지막 페이지
-        int temp = (int) Math.ceil(Integer.parseInt(totalSize)/10.0);
-        this.setEndPage(String.valueOf(temp-1));
+        int temp = (int) Math.ceil(Integer.parseInt(totalSize)/5.0);
+        this.setEndPage(String.valueOf(temp));
 
         List<RealEstateLatestPolicy> list = new ArrayList<>();
-        for (int i=1; i<=10; i++) {
+        for (int i=1; i<=5; i++) {
             Elements titleElements = document.select("#contents > table > tbody > tr:nth-child("+i+") > td.bd_title > a");
+            Elements dateElements = document.select("#contents > table > tbody > tr:nth-child("+i+") > td.bd_date");
 
-            RealEstateLatestPolicy res = RealEstateLatestPolicy.builder()
-                    .enterTitle(titleElements.get(0).text())
-                    .enterUrl(titleElements.get(0).absUrl("href"))
-                    .build();
+            if(!titleElements.isEmpty()){
+                RealEstateLatestPolicy res = RealEstateLatestPolicy.builder()
+                        .enterTitle(titleElements.get(0).text())
+                        .enterUrl(titleElements.get(0).absUrl("href"))
+                        .regDate(dateElements.get(0).text())
+                        .build();
+                list.add(res);
+            }
 
-            list.add(res);
         }
         this.setListEnterTitleAndEnterUrl(list);
 

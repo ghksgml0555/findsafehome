@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CrawlingInterface {
 
-    void makeCrawling(String page);
+    void makeCrawling(int page);
 
     List<RealEstateLatestPolicy> getListEnterTitleAndEnterUrl();
 
