@@ -133,7 +133,7 @@ public class KakaoService {
         Member kakaoMember = memberRepository.findByEmail(kakaoEmail).orElse(null);
 
         if (kakaoMember == null) {    //회원가입
-            kakaoMember= new Member(uid,kakaoEmail,"",nickName,"","",false,ROLE_USER);
+            kakaoMember= new Member(uid,kakaoEmail,"",nickName,"","",false,true,ROLE_USER);
             memberRepository.save(kakaoMember);
         }
         //토큰 생성

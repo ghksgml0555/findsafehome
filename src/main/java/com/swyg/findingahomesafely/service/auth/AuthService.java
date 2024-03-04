@@ -45,6 +45,7 @@ public class AuthService {
         Member member = memberRequestDto.toMember(passwordEncoder);
 
         validationMember.changeDetail(member.getPassword(), member.getName(), member.getDateOfBirth(), member.getTelNo());
+        validationMember.signupTrue();
         return MemberResponseDto.of(memberRepository.save(validationMember));
     }
 
@@ -54,6 +55,9 @@ public class AuthService {
             Member member = memberRepository.findByEmail(loginDto.getEmail()).get();
             if(member.isDelete() == true){
                 throw new SwygException("DM0001","탈퇴한 회원입니다.");
+            }
+            if(member.isSignup()==false){
+                throw new SwygException("NS0001","가입이 완료되지 않은 회원입니다.");
             }
 
             // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
